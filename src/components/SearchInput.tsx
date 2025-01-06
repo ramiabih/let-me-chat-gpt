@@ -20,12 +20,12 @@ const SearchInput = () => {
       return;
     }
     
-    // Get the current hostname, fallback to localhost in development
+    const directUrl = `https://chat.openai.com/?q=${encodeURIComponent(question)}`;
     const baseUrl = window.location.origin || 'http://localhost:5173';
     
     const urls = {
-      direct: `https://chat.openai.com/?q=${encodeURIComponent(question)}`,
-      withAnimation: `${baseUrl}/animate?q=${encodeURIComponent(question)}`
+      direct: directUrl,
+      withAnimation: `${baseUrl}/animate` // Simplified URL - no need for query params
     };
     
     setUrls(urls);
@@ -57,6 +57,7 @@ const SearchInput = () => {
   };
 
   const handleAnimationComplete = () => {
+    // Directly use the ChatGPT URL we already have
     window.location.href = urls?.direct || '';
   };
 
