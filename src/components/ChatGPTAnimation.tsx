@@ -6,25 +6,48 @@ interface ChatGPTAnimationProps {
 }
 
 const ChatGPTAnimation = ({ question, onComplete }: ChatGPTAnimationProps) => {
+  const [step, setStep] = useState(1);
   const [displayText, setDisplayText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= question.length) {
-        setDisplayText(question.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typingInterval);
-        setTimeout(() => {
-          onComplete();
-        }, 1000); // Wait 1 second after typing before redirecting
-      }
-    }, 100); // Adjust typing speed here
+    // Cursor blinking effect
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 530);
 
-    return () => clearInterval(typingInterval);
-  }, [question, onComplete]);
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  useEffect(() => {
+    if (step === 1) {
+      setDisplayText('Step 1: Going to chat.openai.com...');
+      setTimeout(() => setStep(2), 2000);
+    } else if (step === 2) {
+      setDisplayText('Step 2: Let me type that question for you...');
+      setTimeout(() => setStep(3), 1500);
+    } else if (step === 3) {
+      let currentIndex = 0;
+      const typingInterval = setInterval(() => {
+        if (currentIndex <= question.length) {
+          setDisplayText(question.slice(0, currentIndex));
+          currentIndex++;
+        } else {
+          clearInterval(typingInterval);
+          setTimeout(() => {
+            setStep(4);
+          }, 500);
+        }
+      }, 100);
+
+      return () => clearInterval(typingInterval);
+    } else if (step === 4) {
+      setDisplayText('There you go! Was that so hard? 🙄');
+      setTimeout(() => {
+        onComplete();
+      }, 1500);
+    }
+  }, [step, question, onComplete]);
 
   return (
     <div className="fixed inset-0 bg-white dark:bg-[#343541] flex items-center justify-center z-50">
@@ -38,7 +61,11 @@ const ChatGPTAnimation = ({ question, onComplete }: ChatGPTAnimationProps) => {
           <div className="relative flex-1">
             <p className="min-h-[20px] flex flex-col items-start gap-4 whitespace-pre-wrap">
               {displayText}
-              <span className={`inline-block w-[2px] h-[20px] bg-black dark:bg-white ml-[2px] ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-75`}></span>
+              <span 
+                className={`inline-block w-[2px] h-[20px] bg-black dark:bg-white ml-[2px] ${
+                  showCursor ? 'opacity-100' : 'opacity-0'
+                } transition-opacity duration-75`}
+              ></span>
             </p>
           </div>
         </div>

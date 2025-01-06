@@ -21,7 +21,7 @@ const SearchInput = () => {
     }
     
     const directUrl = `https://chat.openai.com/?q=${encodeURIComponent(question)}`;
-    const animationUrl = `https://animate.lmcgtfy.com`; // Updated to use subdomain
+    const animationUrl = `https://animate.lmcgtfy.com/${encodeURIComponent(question)}`; // Now includes the question in the URL
     
     const urls = {
       direct: directUrl,
@@ -49,7 +49,7 @@ const SearchInput = () => {
   };
 
   const handleRedirect = (url: string) => {
-    if (url.includes('/animate')) {
+    if (url.includes('animate.lmcgtfy.com')) {
       setShowAnimation(true);
     } else {
       window.open(url, '_blank');
