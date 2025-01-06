@@ -15,7 +15,7 @@ const Index = () => {
       <SearchInput />
       
       <footer className="fixed bottom-4 text-center text-gray-500 text-sm">
-        Inspired by LMGTFY.com - Made with ❤️
+        Made by <a href="https://x.com/ramiabih" target="_blank" rel="noopener noreferrer" className="text-chatgpt-primary hover:text-chatgpt-secondary underline">Rami</a>
       </footer>
     </div>
   );

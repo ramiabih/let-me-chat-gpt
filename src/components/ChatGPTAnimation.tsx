@@ -22,10 +22,10 @@ const ChatGPTAnimation = ({ question, onComplete }: ChatGPTAnimationProps) => {
   useEffect(() => {
     if (step === 1) {
       setDisplayText('Step 1: Going to chat.openai.com...');
-      setTimeout(() => setStep(2), 2000);
+      setTimeout(() => setStep(2), 2500); // Added 0.5s
     } else if (step === 2) {
       setDisplayText('Step 2: Let me type that question for you...');
-      setTimeout(() => setStep(3), 1500);
+      setTimeout(() => setStep(3), 2000); // Added 0.5s
     } else if (step === 3) {
       let currentIndex = 0;
       const typingInterval = setInterval(() => {
@@ -36,7 +36,7 @@ const ChatGPTAnimation = ({ question, onComplete }: ChatGPTAnimationProps) => {
           clearInterval(typingInterval);
           setTimeout(() => {
             setStep(4);
-          }, 500);
+          }, 1000); // Added 0.5s
         }
       }, 100);
 
@@ -45,7 +45,7 @@ const ChatGPTAnimation = ({ question, onComplete }: ChatGPTAnimationProps) => {
       setDisplayText('There you go! Was that so hard? 🙄');
       setTimeout(() => {
         onComplete();
-      }, 1500);
+      }, 2000); // Added 0.5s
     }
   }, [step, question, onComplete]);
 
@@ -59,10 +59,10 @@ const ChatGPTAnimation = ({ question, onComplete }: ChatGPTAnimationProps) => {
             </svg>
           </div>
           <div className="relative flex-1">
-            <p className="min-h-[20px] flex flex-col items-start gap-4 whitespace-pre-wrap">
+            <p className="min-h-[20px] flex items-start gap-4 whitespace-pre-wrap">
               {displayText}
               <span 
-                className={`inline-block w-[2px] h-[20px] bg-black dark:bg-white ml-[2px] ${
+                className={`inline-block w-[2px] h-[20px] bg-black dark:bg-white ml-[2px] align-middle ${
                   showCursor ? 'opacity-100' : 'opacity-0'
                 } transition-opacity duration-75`}
               ></span>
