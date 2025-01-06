@@ -52,13 +52,15 @@ const SearchInput = () => {
     if (url.includes('/animate')) {
       setShowAnimation(true);
     } else {
-      window.location.href = url;
+      window.open(url, '_blank');
     }
   };
 
   const handleAnimationComplete = () => {
-    // Directly use the ChatGPT URL we already have
-    window.location.href = urls?.direct || '';
+    if (urls?.direct) {
+      window.open(urls.direct, '_blank');
+      setShowAnimation(false);
+    }
   };
 
   return (

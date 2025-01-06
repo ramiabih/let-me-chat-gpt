@@ -38,7 +38,7 @@ const ChatGPTAnimation = ({ question, onComplete }: ChatGPTAnimationProps) => {
           <div className="relative flex-1">
             <p className="min-h-[20px] flex flex-col items-start gap-4 whitespace-pre-wrap">
               {displayText}
-              <span className={`inline-block w-[2px] h-[20px] bg-black dark:bg-white ml-[2px] ${showCursor ? 'animate-cursor-blink' : ''}`}></span>
+              <span className={`inline-block w-[2px] h-[20px] bg-black dark:bg-white ml-[2px] ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-75`}></span>
             </p>
           </div>
         </div>
