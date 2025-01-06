@@ -21,11 +21,11 @@ const SearchInput = () => {
     }
     
     const directUrl = `https://chat.openai.com/?q=${encodeURIComponent(question)}`;
-    const baseUrl = window.location.origin || 'http://localhost:5173';
+    const animationUrl = `https://animate.lmcgtfy.com`; // Updated to use subdomain
     
     const urls = {
       direct: directUrl,
-      withAnimation: `${baseUrl}/animate` // Simplified URL - no need for query params
+      withAnimation: animationUrl
     };
     
     setUrls(urls);
@@ -84,48 +84,54 @@ const SearchInput = () => {
       
       {urls && (
         <div className="space-y-4">
-          <div className="relative">
-            <Input
-              type="text"
-              value={urls.withAnimation}
-              readOnly
-              className="pr-24"
-            />
-            <Button
-              onClick={() => copyToClipboard(urls.withAnimation, 'fun')}
-              variant="ghost"
-              className="absolute right-12 top-1/2 -translate-y-1/2"
-            >
-              <Copy className="w-4 h-4" />
-            </Button>
-            <Button
-              onClick={() => handleRedirect(urls.withAnimation)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-chatgpt-primary hover:bg-chatgpt-secondary px-2"
-            >
-              Go
-            </Button>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-muted-foreground">Passive Aggressive URL (with animation)</label>
+            <div className="relative">
+              <Input
+                type="text"
+                value={urls.withAnimation}
+                readOnly
+                className="pr-24"
+              />
+              <Button
+                onClick={() => copyToClipboard(urls.withAnimation, 'fun')}
+                variant="ghost"
+                className="absolute right-12 top-1/2 -translate-y-1/2"
+              >
+                <Copy className="w-4 h-4" />
+              </Button>
+              <Button
+                onClick={() => handleRedirect(urls.withAnimation)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-chatgpt-primary hover:bg-chatgpt-secondary px-2"
+              >
+                Go
+              </Button>
+            </div>
           </div>
           
-          <div className="relative">
-            <Input
-              type="text"
-              value={urls.direct}
-              readOnly
-              className="pr-24"
-            />
-            <Button
-              onClick={() => copyToClipboard(urls.direct, 'direct')}
-              variant="ghost"
-              className="absolute right-12 top-1/2 -translate-y-1/2"
-            >
-              <Copy className="w-4 h-4" />
-            </Button>
-            <Button
-              onClick={() => handleRedirect(urls.direct)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-chatgpt-primary hover:bg-chatgpt-secondary px-2"
-            >
-              Go
-            </Button>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-muted-foreground">Normal URL (direct to ChatGPT)</label>
+            <div className="relative">
+              <Input
+                type="text"
+                value={urls.direct}
+                readOnly
+                className="pr-24"
+              />
+              <Button
+                onClick={() => copyToClipboard(urls.direct, 'direct')}
+                variant="ghost"
+                className="absolute right-12 top-1/2 -translate-y-1/2"
+              >
+                <Copy className="w-4 h-4" />
+              </Button>
+              <Button
+                onClick={() => handleRedirect(urls.direct)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-chatgpt-primary hover:bg-chatgpt-secondary px-2"
+              >
+                Go
+              </Button>
+            </div>
           </div>
         </div>
       )}
