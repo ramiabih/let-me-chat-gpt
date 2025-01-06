@@ -3,10 +3,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Copy, Share2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import ChatGPTAnimation from './ChatGPTAnimation';
 
 const SearchInput = () => {
   const [question, setQuestion] = useState('');
   const [shortenedUrl, setShortenedUrl] = useState('');
+  const [showAnimation, setShowAnimation] = useState(false);
   const { toast } = useToast();
 
   const generateUrl = () => {
@@ -19,7 +21,6 @@ const SearchInput = () => {
     }
     
     const url = `https://chat.openai.com/?q=${encodeURIComponent(question)}`;
-    // In a real app, you'd call an API to shorten the URL
     setShortenedUrl(url);
     console.log("Generated URL:", url);
   };
@@ -38,6 +39,14 @@ const SearchInput = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const handleRedirect = () => {
+    setShowAnimation(true);
+  };
+
+  const handleAnimationComplete = () => {
+    window.location.href = shortenedUrl;
   };
 
   return (
@@ -65,16 +74,29 @@ const SearchInput = () => {
             type="text"
             value={shortenedUrl}
             readOnly
-            className="pr-12"
+            className="pr-24"
           />
           <Button
             onClick={copyToClipboard}
             variant="ghost"
-            className="absolute right-2 top-1/2 -translate-y-1/2"
+            className="absolute right-12 top-1/2 -translate-y-1/2"
           >
             <Copy className="w-4 h-4" />
           </Button>
+          <Button
+            onClick={handleRedirect}
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-chatgpt-primary hover:bg-chatgpt-secondary px-2"
+          >
+            Go
+          </Button>
         </div>
+      )}
+
+      {showAnimation && (
+        <ChatGPTAnimation
+          question={question}
+          onComplete={handleAnimationComplete}
+        />
       )}
     </div>
   );
